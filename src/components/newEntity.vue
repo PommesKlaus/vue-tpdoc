@@ -28,7 +28,9 @@
         <div class="form-group col-md-6">
           <label for="selectType">Company Type</label>
           <select class="form-control" id="selectType" v-model="formData.type">
-            <option value="corporation">Corporation</option>
+            <option v-for="option in templates" v-bind:value="option.type">
+              {{ option.type }}
+            </option>
           </select>
         </div>
       </div>
@@ -42,6 +44,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import countries from '../settings/countries.json'
 
 export default {
@@ -49,13 +52,29 @@ export default {
   data () {
     return {
       countries: countries,
+      templates: [],
       formData: {
         shortname: '',
         name: '',
         country: '',
-        type: ''
+        type: '',
+        questionnaire: {}
       }
     }
+  },
+  watch: {
+    'formData.type': function () {
+      this.formData.questionnaire = this.templates.find((template) => {
+        return template.type === this.formData.type
+      }).questionnaire
+    }
+  },
+  beforeMount () {
+    axios.all([
+      axios.get('http://localhost:3000/api/Templates?for=entity')
+    ]).then(([{ data: templateData }]) => {
+      this.templates = templateData
+    })
   }
 }
 </script>
