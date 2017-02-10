@@ -35,10 +35,13 @@
         </div>
       </div>
 
+      <div class="row">
+        <button class="btn btn-primary center" v-on:click="saveEntity">Save Entity</button>
+      </div>
 
-      
+      <!-- Eventually show template and allow changes -->
+
     </div>
-
 
   </div>
 </template>
@@ -60,6 +63,19 @@ export default {
         type: '',
         questionnaire: {}
       }
+    }
+  },
+  methods: {
+    saveEntity: function (evt) {
+      axios.post('http://localhost:3000/api/Entities', this.formData)
+      .then(function (response) {
+        console.log(response)
+        // TODO: Redirect to Company-Detail View
+      })
+      .catch(function (error) {
+        console.log(error)
+        // TODO: Show error message as Flash
+      })
     }
   },
   watch: {

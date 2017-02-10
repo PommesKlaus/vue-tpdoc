@@ -16,4 +16,9 @@ export default {
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.center {
+  display: block;
+  margin: auto;
+}
 </style>
