@@ -36,7 +36,9 @@
       </div>
 
       <div class="row">
-        <button class="btn btn-primary center" v-on:click="saveEntity">Save Entity</button>
+        <div class="center">
+          <button class="btn btn-success" v-on:click="saveEntity"><i class="fa fa-save"></i> Save Entity</button>
+        </div>
       </div>
 
       <!-- Eventually show template and allow changes -->
@@ -49,6 +51,9 @@
 <script>
 import axios from 'axios'
 import countries from '../settings/countries.json'
+import settings from '../settings/config.json'
+
+const url = settings.apiUrl
 
 export default {
   name: 'newEntity',
@@ -67,7 +72,7 @@ export default {
   },
   methods: {
     saveEntity: function (evt) {
-      axios.post('http://localhost:3000/api/Entities', this.formData)
+      axios.post(url + 'Entities', this.formData)
       .then(function (response) {
         console.log(response)
         // TODO: Redirect to Company-Detail View
@@ -87,7 +92,7 @@ export default {
   },
   beforeMount () {
     axios.all([
-      axios.get('http://localhost:3000/api/Templates?for=entity')
+      axios.get(url + 'Templates?for=entity')
     ]).then(([{ data: templateData }]) => {
       this.templates = templateData
     })
@@ -97,8 +102,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.group {
-  border-bottom: 1px solid #eee;
-  color: #616161
-}
+
 </style>
