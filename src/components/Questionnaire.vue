@@ -1,8 +1,8 @@
 <template>
   <div class="questionnaire">
-    <p class="lead">{{ value.description }}</p>
+    <p class="lead">{{ questionnaire.description }}</p>
 
-    <div v-for="(group, groupIndex) in value.groups">
+    <div v-for="(group, groupIndex) in questionnaire.groups">
       <h2 class="group">{{ group.title }}</h2>
       <p>{{ group.description }}</p>
 
@@ -15,7 +15,7 @@
           <input 
             type="text" 
             v-if="question.inputType === 'text'" 
-            v-model="question.value"
+            v-model.lazy="question.value"
             class="form-control"
             v-bind:placeholder="question.placeholder"
             v-bind:id="groupIndex + '.' + questionIndex"
@@ -24,13 +24,13 @@
           <!-- memo -->
           <textarea 
             v-if="question.inputType === 'memo'" 
-            v-model="question.value"
+            v-model.lazy="question.value"
             class="form-control"
             v-bind:placeholder="question.placeholder"
             v-bind:id="groupIndex + '.' + questionIndex"
           ></textarea>
 
-
+          <!-- Display a small hint with the question description below the form field -->
           <small class="form-text text-muted">{{ question.description }}</small>
 
         </div>
@@ -45,17 +45,29 @@
 export default {
   name: 'Questionnaire',
   props: {
-    value: {
+    jsonQuestionnaire: {
       type: Object,
       required: true
     }
   },
   data () {
     return {
+      questionnaire: JSON.parse(JSON.stringify(this.jsonQuestionnaire))
     }
   },
-  mounted () {
-    console.log('MOUNTED!')
+  watch: {
+    // Wait for props to update, then deep copy props to local data ("questionnaire")
+    jsonQuestionnaire: function () {
+      this.questionnaire = JSON.parse(JSON.stringify(this.jsonQuestionnaire))
+    },
+    questionnaire: {
+      handler: function (val, oldval) {
+        if (Object.keys(oldval).length !== 0) {
+          this.$emit('input', this.questionnaire)
+        }
+      },
+      deep: true
+    }
   }
 }
 </script>

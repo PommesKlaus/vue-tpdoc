@@ -1,36 +1,45 @@
 <template>
   <div>
     <h1>Entity Details</h1>
-    <h2 class="text-center">
-      {{ formData.name }} ({{ formData.shortname }}) 
-      <br />
-      <span :class="countryCssClass" v-bind:title="countryTitle"></span>
-      <small class="text-muted">{{ formData.type }}</small>
-    </h2>
 
-    <div v-if="error">
-      {{ error }}
+    <div v-if="formData._id === ''" class="text-center">
+      <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
     </div>
 
-    <questionnaire v-model="formData.questionnaire"></questionnaire>
+    <div v-else>
 
-    <button class="btn btn-success" v-on:click="saveEntity"><i class="fa fa-save"></i> Save Entity</button>
+      <h2 class="text-center">
+        {{ formData.name }} ({{ formData.shortname }}) 
+        <br />
+        <country :iso-code="formData.country"></country>
+        <small class="text-muted">{{ formData.type }}</small>
+      </h2>
+
+      <div v-if="error">
+        {{ error }}
+      </div>
+
+      <questionnaire v-bind:json-questionnaire="initialQuestionnaire" @input="updateQuestionnaire" v-if="initialQuestionnaire"></questionnaire>
+
+    </div>
 
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import countries from '../settings/countries.json'
 import settings from '../settings/config.json'
 import Questionnaire from './Questionnaire'
+import Country from './CountryFlag'
 
 const url = settings.apiUrl
 
 export default {
   name: 'EntityDetail',
   components: {
-    'questionnaire': Questionnaire
+    'questionnaire': Questionnaire,
+    'country': Country
   },
   data () {
     return {
@@ -42,13 +51,19 @@ export default {
         country: '',
         type: '',
         questionnaire: {}
-      }
+      },
+      initialQuestionnaire: {}
     }
   },
   methods: {
-    fetchData () {
+    updateQuestionnaire: function (updatedData) {
+      this.formData.questionnaire = updatedData
+      this.saveEntity()
+    },
+    fetchData: function () {
       axios.get(url + 'Entities/' + this.$route.params.id)
       .then((res) => {
+        this.initialQuestionnaire = JSON.parse(JSON.stringify(res.data.questionnaire))
         this.formData = res.data
       })
       .catch((error) => {
@@ -72,18 +87,7 @@ export default {
   watch: {
     '$route': 'fetchData'
   },
-  computed: {
-    countryCssClass: function () {
-      return 'flag-icon flag-icon-' + this.formData.country.toLowerCase()
-    },
-    countryTitle: function () {
-      let iso = this.formData.country || 'DE'
-      return countries.find(function (country) {
-        return country.code === iso
-      }).name
-    }
-  },
-  beforeMount () {
+  created () {
     this.fetchData()
   }
 }
