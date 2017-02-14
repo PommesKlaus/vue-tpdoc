@@ -29,9 +29,9 @@
 
 <script>
 import axios from 'axios'
-import settings from '../settings/config.json'
-import Questionnaire from './Questionnaire'
-import Country from './CountryFlag'
+import settings from '../../settings/config.json'
+import Questionnaire from '../general/Questionnaire'
+import Country from '../general/CountryFlag'
 
 const url = settings.apiUrl
 
@@ -75,8 +75,7 @@ export default {
       delete payload._id
       axios.put(url + 'Entities/' + this.$route.params.id, payload)
       .then(function (response) {
-        console.log(response)
-        // TODO: Redirect to Company-Detail View
+        console.log('Entity saved!')
       })
       .catch(function (error) {
         console.log(error)

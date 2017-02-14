@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import countries from '../settings/countries.json'
+import countries from '../../settings/countries.json'
 
 export default {
   name: 'CountryFlag',

@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'components/Hello'
-import EntityNew from 'components/EntityNew'
-import EntityDetail from 'components/EntityDetail'
+import EntityNew from 'components/entity/EntityNew'
+import EntityDetail from 'components/entity/EntityDetail'
+import TopicNew from 'components/topic/TopicNew'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/entities/:id',
       name: 'EntityDetail',
       component: EntityDetail
+    },
+    {
+      path: '/topics/new',
+      name: 'TopicNew',
+      component: TopicNew
     }
   ]
 })

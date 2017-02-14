@@ -54,9 +54,9 @@
 
 <script>
 import axios from 'axios'
-import countries from '../settings/countries.json'
-import settings from '../settings/config.json'
-import router from '../router/'
+import countries from '../../settings/countries.json'
+import settings from '../../settings/config.json'
+import router from '../../router/'
 
 const url = settings.apiUrl
 
