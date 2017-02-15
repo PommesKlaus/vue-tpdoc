@@ -37,24 +37,48 @@
         </div>
 
         <div class="row">
+
           <div class="form-group col-md-6">
-            <label for="selectEntity">Select involved entities</label>
-            <select class="form-control" id="selectEntity" v-model="formData.entities" multiple>
-              <option v-for="(entity, index) in entities" v-bind:value="entity">
-                {{ entity.name }}
-              </option>
-            </select>
+            <label>Select involved entities</label>
+            <div class="multiselect-div">
+              <table class="table table-sm">
+                <col style="width: 60px">
+                <col>
+                <thead>
+                  <tr>
+                    <th class="text-center"><i class="fa fa-globe" aria-hidden="true"></i></th>
+                    <th>Name</th>
+                  </tr>
+                  <tr>
+                    <td><input class="form-control form-control-sm country-filter-input" v-model="countryFilter" placeholder=""></td>
+                    <td><input class="form-control form-control-sm" v-model="companyNameFilter" placeholder=""></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(entity, index) in filteredEntities">
+                    <td class="text-center"><country :iso-code="entity.country"></country></td>
+                    <td><a href="javascript:void(0)" @click="addEntity(entity)">{{ entity.name }} <span v-if="entity.shortname !== ''">({{ entity.shortname }})</span></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div class="col-md-6">
-            <label>Selected Entities</label>
-            <ul>
-              <li v-for="(entity, index) in formData.entities">
-                <country :iso-code="entity.country"></country>
-                {{ entity.name }}
+
+          <div class="form-group col-md-6">
+            <label>Selected entities</label>
+            <ul class="clear-list">
+              <li v-for="(entity, index) in formData.entities" class="clear-list-item">
+                <a href="javascript:void(0)" @click="removeEntity(entity, index)">
+                  <country :iso-code="entity.country"></country>
+                  {{ entity.name }} 
+                  <span v-if="entity.shortname !== ''">({{ entity.shortname }})</span>
+                </a>
               </li>
             </ul>
           </div>
-        </div>
+              
+          </div>
+
 
         <div class="row">
           <div class="center">
@@ -88,6 +112,8 @@ export default {
     return {
       templates: [],
       entities: [],
+      countryFilter: '',
+      companyNameFilter: '',
       formData: {
         name: '',
         type: '',
@@ -109,6 +135,26 @@ export default {
         console.log(error)
         // TODO: Show error message as Flash
       })
+    },
+    addEntity: function (entity) {
+      let index = this.entities.indexOf(entity)
+      this.formData.entities.push(entity)
+      this.entities.splice(index, 1)
+    },
+    removeEntity: function (entity, index) {
+      this.entities.push(entity)
+      this.formData.entities.splice(index, 1)
+    }
+  },
+  computed: {
+    filteredEntities: function () {
+      let filteredByCountry = this.entities.filter((e) => {
+        return e.country.toLowerCase().includes(this.countryFilter.toLowerCase())
+      })
+      return filteredByCountry.filter((e) => {
+        let entityName = e.name.toLowerCase() + e.shortname.toLowerCase()
+        return entityName.includes(this.companyNameFilter.toLowerCase())
+      })
     }
   },
   watch: {
@@ -118,7 +164,7 @@ export default {
       }).questionnaire
     }
   },
-  beforeMount () {
+  created () {
     axios.all([
       axios.get(url + 'Templates?for=topic'),
       axios.get(url + 'Entities')
@@ -132,5 +178,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.multiselect-div {
+  height: 250px;
+}
 
+.clear-list {
+  padding-left: 0px;
+}
+
+.clear-list-item {
+  list-style-type: none;
+}
+
+.country-filter-input {
+  width: 60px;
+}
 </style>
