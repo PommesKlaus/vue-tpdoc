@@ -98,7 +98,7 @@
 <script>
 import axios from 'axios'
 import settings from '../../settings/config.json'
-// import router from '../../router/'
+import router from '../../router/'
 import Country from '../general/CountryFlag'
 
 const url = settings.apiUrl
@@ -128,8 +128,8 @@ export default {
     saveTopic: function (evt) {
       axios.post(url + 'Topics', this.formData)
       .then(function (response) {
-        // let topicId = response.data._id
-        // router.push({ name: 'TopicDetail', params: { id: topicId } })
+        let topicId = response.data._id
+        router.push({ name: 'TopicDetail', params: { id: topicId } })
       })
       .catch(function (error) {
         console.log(error)
