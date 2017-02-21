@@ -1,3 +1,17 @@
 {
-    "apiUrl": "http://localhost:3000/api/"
+    "apiUrl": "http://localhost:3000/api/",
+    "templateForList": [
+        {
+          "name": "entity",
+          "display": "Entity"
+        },
+        {
+          "name": "topic",
+          "display": "Topic"
+        }
+    ],
+    "questionnaireInputTypes": [
+        "text",
+        "memo"
+    ]
 }

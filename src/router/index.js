@@ -5,6 +5,8 @@ import EntityNew from 'components/entity/EntityNew'
 import EntityDetail from 'components/entity/EntityDetail'
 import TopicNew from 'components/topic/TopicNew'
 import TopicDetail from 'components/topic/TopicDetail'
+import TemplateList from 'components/templates/TemplateList'
+import TemplateNew from 'components/templates/TemplateNew'
 
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/topics/:id',
       name: 'TopicDetail',
       component: TopicDetail
+    },
+    {
+      path: '/templates',
+      name: 'TemplateList',
+      component: TemplateList
+    },
+    {
+      path: '/templates/new',
+      name: 'TemplateNew',
+      component: TemplateNew
     }
   ]
 })
