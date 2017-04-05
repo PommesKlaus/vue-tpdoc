@@ -44,7 +44,7 @@
         {{ error }}
       </div>
 
-      <questionnaire v-bind:json-questionnaire="initialQuestionnaire" @input="updateQuestionnaire" v-if="initialQuestionnaire"></questionnaire>
+      <questionnaire :json-questionnaire="initialQuestionnaire" @input="updateQuestionnaire" v-if="initialQuestionnaire"></questionnaire>
 
     </div>
 
