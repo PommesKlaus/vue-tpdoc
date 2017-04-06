@@ -1,14 +1,26 @@
 <template>
   <div id="app">
-    <div class="container">
-      <router-view></router-view>
-    </div>    
+    
+    <header>
+      <header-nav></header-nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <router-view></router-view>
+      </div>
+    </main>    
   </div>
 </template>
 
 <script>
+import HeaderNav from './components/header/HeaderNav'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    'header-nav': HeaderNav
+  }
 }
 </script>
 
@@ -17,14 +29,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.center {
-  display: block;
-  margin: auto;
+main {
+  margin-top: 75px;
+  height: 100%;
 }
 
-.group {
-  border-bottom: 1px solid #eee;
-  color: #616161;
-  margin-top:50px;
-}
 </style>

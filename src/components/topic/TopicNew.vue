@@ -57,7 +57,7 @@
                 <tbody>
                   <tr v-for="(entity, index) in filteredEntities">
                     <td class="text-center"><country :iso-code="entity.country"></country></td>
-                    <td><a href="javascript:void(0)" @click="addEntity(entity)">{{ entity.name }} <span v-if="entity.shortname !== ''">({{ entity.shortname }})</span></span></td>
+                    <td><a href="javascript:void(0)" @click="addEntity(entity)">{{ entity.name }} <span v-if="entity.shortname !== ''">({{ entity.shortname }})</span></a></td>
                   </tr>
                 </tbody>
               </table>

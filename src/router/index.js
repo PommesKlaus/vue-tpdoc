@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'components/Hello'
+import SignIn from 'components/signin/SignIn'
 import EntityNew from 'components/entity/EntityNew'
 import EntityDetail from 'components/entity/EntityDetail'
 import TopicNew from 'components/topic/TopicNew'
@@ -16,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'MainPage',
       component: Hello
+    },
+    {
+      path: '/signin',
+      name: 'SignIn',
+      component: SignIn
     },
     {
       path: '/entities/new',

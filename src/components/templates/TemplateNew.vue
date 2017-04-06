@@ -166,7 +166,7 @@
       <a href="javascript:void(0)" @click="addGroup(formData.questionnaire.groups.length)">Add Group</a>
 -->
 
-      <qtemplate :json-template="initialTemplate" @input="updateTemplate" v-if="initialTemplate"></questionnaire>
+      <qtemplate :json-template="initialTemplate" @input="updateTemplate" v-if="initialTemplate"></qtemplate>
 
       <div class="row">
         <div class="center">
