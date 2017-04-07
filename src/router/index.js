@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from 'components/Hello'
-import SignIn from 'components/signin/SignIn'
+import Login from 'components/login/Login'
 import EntityNew from 'components/entity/EntityNew'
 import EntityDetail from 'components/entity/EntityDetail'
-import TopicNew from 'components/topic/TopicNew'
-import TopicDetail from 'components/topic/TopicDetail'
+import TransactionNew from 'components/transaction/TransactionNew'
+import TransactionDetail from 'components/transaction/TransactionDetail'
 import TemplateList from 'components/templates/TemplateList'
 import TemplateNew from 'components/templates/TemplateNew'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -19,9 +19,9 @@ export default new Router({
       component: Hello
     },
     {
-      path: '/signin',
-      name: 'SignIn',
-      component: SignIn
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     {
       path: '/entities/new',
@@ -34,14 +34,14 @@ export default new Router({
       component: EntityDetail
     },
     {
-      path: '/topics/new',
-      name: 'TopicNew',
-      component: TopicNew
+      path: '/transaction/new',
+      name: 'TransactionNew',
+      component: TransactionNew
     },
     {
-      path: '/topics/:id',
-      name: 'TopicDetail',
-      component: TopicDetail
+      path: '/transaction/:id',
+      name: 'TransactionDetail',
+      component: TransactionDetail
     },
     {
       path: '/templates',
@@ -55,3 +55,14 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (localStorage.getItem('tpdocToken') === null && to.name !== 'Login') {
+    // redirect to login-page
+    next('Login')
+  } else {
+    next()
+  }
+})
+
+export default router

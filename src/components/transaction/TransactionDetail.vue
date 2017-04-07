@@ -60,7 +60,7 @@ import Country from '../general/CountryFlag'
 const url = settings.apiUrl
 
 export default {
-  name: 'TopicDetail',
+  name: 'TransactionDetail',
   components: {
     'questionnaire': Questionnaire,
     'country': Country

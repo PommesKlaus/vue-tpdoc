@@ -7,21 +7,21 @@
       <div>
         <ul class="nav navbar-nav">
           <li>
-            <a href="#"><i class="fa fa-pencil" aria-hidden="true"></i>Add Transaction</a>
+            <router-link :to="{ name: 'TransactionNew' }"><i class="fa fa-pencil" aria-hidden="true"></i>Add Transaction</router-link>
           </li>
-          <li class="active">
+          <li v-if="userRoles.indexOf('tp') !== -1">
             <a href="#"><i class="fa fa-cube" aria-hidden="true"></i>Entity</a>
           </li>
-          <li>
+          <li v-if="userRoles.indexOf('tp') !== -1">
             <a href="#"><i class="fa fa-book" aria-hidden="true"></i>Generate Report</a>
           </li>
-          <li>
-            <a href="#"><i class="fa fa-copy" aria-hidden="true"></i>Templates</a>
+          <li v-if="userRoles.indexOf('admin') !== -1">
+            <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Settings</a>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#" class="navbar-link" v-on:click="getAuth"><i class="fa fa-user-circle-o" aria-hidden="true"></i>Mark Otto</a>
+            <a href="#" class="navbar-link"><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{ userEMail }}</a>
           </li>
           <!--<li>
             <a href="#" class="navbar-link">
@@ -36,22 +36,24 @@
 
 <script>
 import jwtDecode from 'jwt-decode'
+import axios from 'axios'
 
 export default {
   name: 'HeaderNav',
   data () {
     return {
-      user: {}
+      userEMail: '',
+      userRoles: []
     }
   },
-  methods: {
-    getAuth () {
-      const jwt = localStorage.getItem('id_token')
-      if (jwt) {
-        this.user = jwtDecode(jwt)
-      } else {
-        this.user = false
-      }
+  methods: {},
+  created () {
+    const token = localStorage.getItem('tpdocToken')
+    if (token !== null) {
+      const decodedToken = jwtDecode(localStorage.getItem('tpdocToken'))
+      this.userEMail = decodedToken.eMail
+      this.userRoles = decodedToken.roles
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
     }
   }
 }
@@ -64,7 +66,7 @@ export default {
   Header-Navigation
 */
 
-.navbar .navbar-nav>.active>a {
+.navbar .navbar-nav>li>a.router-link-active {
   border-bottom: 2px solid #FF9800;
 }
 
