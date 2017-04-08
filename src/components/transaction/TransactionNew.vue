@@ -9,6 +9,7 @@
       <div class="container">
 
         <div class="col-sm-3">
+          <p class="text-center"><i class="fa fa-pencil fa-5" aria-hidden="true"></i></p>
         </div>
 
         <div class="col-sm-9 content">
@@ -25,7 +26,7 @@
           <div class="general-info">
             <h2 class="group">Master Data</h2>
 
-            <form @submit.prevent="saveTopic">
+            <form @submit.prevent="saveTransaction">
 
               <div class="row">
                 <div class="form-group col-md-12">
@@ -154,7 +155,7 @@ export default {
     }
   },
   methods: {
-    saveTopic: function (evt) {
+    saveTransaction: function (evt) {
       axios.post(url + 'transactions', this.formData)
       .then(function (response) {
         let transactionId = response.data._id
@@ -220,5 +221,10 @@ export default {
 
 .country-filter-input {
   width: 60px;
+}
+
+.fa-5 {
+  font-size: 12em;
+  margin-top: 30px;
 }
 </style>

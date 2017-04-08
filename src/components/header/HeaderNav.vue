@@ -7,7 +7,9 @@
       <div>
         <ul class="nav navbar-nav">
           <li>
-            <router-link :to="{ name: 'TransactionNew' }"><i class="fa fa-pencil" aria-hidden="true"></i>Add Transaction</router-link>
+            <router-link :to="{ name: 'TransactionNew' }">
+              <i class="fa fa-pencil" aria-hidden="true"></i>Add Transaction
+            </router-link>
           </li>
           <li v-if="userRoles.indexOf('tp') !== -1">
             <a href="#"><i class="fa fa-cube" aria-hidden="true"></i>Entity</a>
@@ -21,7 +23,9 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#" class="navbar-link"><i class="fa fa-user-circle-o" aria-hidden="true"></i>{{ userEMail }}</a>
+            <router-link :to="{ name: 'UserDetail', params: { id: userId }}">
+              <i class="fa fa-user-circle-o" aria-hidden="true"></i>{{ userEMail }}
+            </router-link>
           </li>
           <!--<li>
             <a href="#" class="navbar-link">
@@ -43,6 +47,7 @@ export default {
   data () {
     return {
       userEMail: '',
+      userId: '',
       userRoles: []
     }
   },
@@ -52,6 +57,7 @@ export default {
     if (token !== null) {
       const decodedToken = jwtDecode(localStorage.getItem('tpdocToken'))
       this.userEMail = decodedToken.eMail
+      this.userId = decodedToken.id
       this.userRoles = decodedToken.roles
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
     }

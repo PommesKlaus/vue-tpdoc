@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import jwtDecode from 'jwt-decode'
 import Hello from 'components/Hello'
 import Login from 'components/login/Login'
 import EntityNew from 'components/entity/EntityNew'
@@ -8,6 +9,7 @@ import TransactionNew from 'components/transaction/TransactionNew'
 import TransactionDetail from 'components/transaction/TransactionDetail'
 import TemplateList from 'components/templates/TemplateList'
 import TemplateNew from 'components/templates/TemplateNew'
+import UserDetail from 'components/user/UserDetail'
 
 Vue.use(Router)
 
@@ -52,16 +54,35 @@ const router = new Router({
       path: '/templates/new',
       name: 'TemplateNew',
       component: TemplateNew
+    },
+    {
+      path: '/users/:id',
+      name: 'UserDetail',
+      component: UserDetail
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('tpdocToken') === null && to.name !== 'Login') {
-    // redirect to login-page
-    next('Login')
+  const token = localStorage.getItem('tpdocToken')
+  if (token === null) {
+    // No jwt found => redirect to login-page
+    if (to.name === 'Login') {
+      next()
+    } else {
+      next('/login')
+    }
   } else {
-    next()
+    const decodedToken = jwtDecode(token)
+    const curTimestamp = Date.now()
+    if (curTimestamp > decodedToken.exp * 1000) {
+      // jwt exists but is expired => Delete Token from localStorage and redirect to login-page
+      localStorage.removeItem('tpdocToken')
+      localStorage.removeItem('tpdocEMail')
+      next('Login')
+    } else {
+      next()
+    }
   }
 })
 
