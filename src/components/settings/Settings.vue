@@ -9,16 +9,33 @@
       <div class="container">
 
         <div class="col-sm-3">
-          <p class="text-center"><i class="fa fa-user-circle-o fa-5" aria-hidden="true"></i></p>
-          <p class="text-center"><button class="btn btn-danger" @click="logout">Logout</button></p>
+          <p class="text-center"><i class="fa fa-cogs fa-5" aria-hidden="true"></i></p>
           <status :status="status" class="status"></status>
+          <div id="sidebar-wrapper">
+            <ul class="nav">
+              <li class="header">User</li>
+              <li>
+                <ul class="nav">
+                  <li><a href="#">Create new</a></li>
+                  <li><a href="#">List existing</a></li>
+                </ul>
+              </li>
+              <li class="header">Templates</li>
+              <li>
+                <ul class="nav">
+                  <li><a href="#">Create New</a></li>
+                  <li><a href="#">List existing</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div class="col-sm-9 content">
 
           <div class="jumbotron">
-            <h1>User Settings</h1>
-            <h2>Change Password etc.</h2>
+            <h1>App Settings</h1>
+            <h2>Restricted Access</h2>
           </div>
 
           <div class="general-info">
@@ -135,20 +152,53 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.multiselect-div {
-  height: 250px;
+#sidebar-wrapper {
+  position: fixed;
+  top: 300px;
+  overflow-y: auto;
+  height: calc(100% - 75px);
+  width: 25%;
 }
 
-.clear-list {
-  padding-left: 0px;
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    width: 150px;
+  }
 }
 
-.clear-list-item {
-  list-style-type: none;
+@media (min-width: 992px) {
+  #sidebar-wrapper {
+    width: 205px;
+  }
 }
 
-.country-filter-input {
-  width: 60px;
+@media (min-width: 1200px) {
+  #sidebar-wrapper {
+    width: 255px;
+  }
+}
+
+@media (max-width: 768px) {
+  #sidebar-wrapper {
+    position: relative;
+    height: auto;
+  }
+}
+
+#sidebar-wrapper li.header {
+  font-weight: 700;
+  margin-top: 25px;
+  line-height: 20px;
+}
+
+#sidebar-wrapper a.active {
+  background-color: #E3F2FD;
+  font-weight: 700;
+  text-align: right;
+}
+
+#sidebar-wrapper a.active>span.badge {
+  display: none;
 }
 
 .fa-5 {

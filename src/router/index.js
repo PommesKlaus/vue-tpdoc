@@ -10,6 +10,7 @@ import TransactionDetail from 'components/transaction/TransactionDetail'
 import TemplateList from 'components/templates/TemplateList'
 import TemplateNew from 'components/templates/TemplateNew'
 import UserDetail from 'components/user/UserDetail'
+import Settings from 'components/settings/Settings'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ const router = new Router({
       path: '/users/:id',
       name: 'UserDetail',
       component: UserDetail
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     }
   ]
 })

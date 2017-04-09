@@ -129,7 +129,6 @@ import Country from '../general/CountryFlag'
 import HeaderNav from '../header/HeaderNav'
 
 const url = settings.apiUrl
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('tpdocToken')
 
 export default {
   name: 'TransactionNew',

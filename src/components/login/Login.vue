@@ -15,9 +15,7 @@
         <form class="form-signin"  v-on:submit.prevent="signIn">
           <h2 class="form-signin-heading">Please sign in</h2>
 
-          <div v-if="error!==''" class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
+          <status :status="status"></status>
 
           <label for="inputEmail" class="sr-only">Email address</label>
           <input v-model="formData.eMail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
@@ -35,10 +33,20 @@ import axios from 'axios'
 import settings from '../../settings/config.json'
 // import router from '../../router/'
 import jwtDecode from 'jwt-decode'
+import Status from '../general/Status'
 
 const url = settings.apiUrl
 
+const statusInit = {
+  status: 0,
+  statusText: '',
+  message: ''
+}
+
 export default {
+  components: {
+    'status': Status
+  },
   name: 'Login',
   data () {
     return {
@@ -47,7 +55,7 @@ export default {
         eMail: '',
         password: ''
       },
-      error: ''
+      status: statusInit
     }
   },
   methods: {
@@ -67,10 +75,10 @@ export default {
         window.location = '/'
       })
       .catch(err => {
-        if (err.response.status === 401) {
-          this.error = err.response.statusText + ': Incorrect Username and/or Password!'
-        } else {
-          this.error = err.toString()
+        this.status = {
+          status: err.response.status,
+          statusText: err.response.statusText,
+          message: err.response.data.message
         }
       })
     }

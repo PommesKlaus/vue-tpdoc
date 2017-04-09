@@ -18,7 +18,9 @@
             <a href="#"><i class="fa fa-book" aria-hidden="true"></i>Generate Report</a>
           </li>
           <li v-if="userRoles.indexOf('admin') !== -1">
-            <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i>Settings</a>
+            <router-link :to="{ name: 'Settings' }">
+              <i class="fa fa-cogs" aria-hidden="true"></i>Settings
+            </router-link>
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
