@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <h1>Create new Template</h1>
+  <div class="col-sm-9 content">
+
+    <div class="jumbotron">
+        <h1>App Settings</h1>
+        <h2>Create new Templates</h2>
+    </div>
+
+    <div class="general-info">
+ 
 
     <form @submit.prevent="saveTemplate">
 
@@ -23,7 +30,7 @@
 
       <div class="row">
         <div class="form-group col-md-12">
-          <label for="inputType">Name for the template-type</label>
+          <label for="inputType">Name for the template-type (will be displayed as Transaction Category in the menu)</label>
           <input 
             v-model="formData.type" 
             id="inputType" 
@@ -32,6 +39,7 @@
           >
         </div>
       </div>
+      
 
       <!--<h2 class="group">Create Questionnaire Template</h2>
 
@@ -175,6 +183,7 @@
       </div>
 
     </form>
+    </div>
 
   </div>
 </template>

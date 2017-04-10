@@ -7,10 +7,13 @@ import EntityNew from 'components/entity/EntityNew'
 import EntityDetail from 'components/entity/EntityDetail'
 import TransactionNew from 'components/transaction/TransactionNew'
 import TransactionDetail from 'components/transaction/TransactionDetail'
-import TemplateList from 'components/templates/TemplateList'
-import TemplateNew from 'components/templates/TemplateNew'
 import UserDetail from 'components/user/UserDetail'
 import Settings from 'components/settings/Settings'
+import SettingsGeneral from 'components/settings/general/General'
+import UserList from 'components/user/UserList'
+import UserNew from 'components/user/UserNew'
+import TemplateList from 'components/template/TemplateList'
+import TemplateNew from 'components/template/TemplateNew'
 
 Vue.use(Router)
 
@@ -47,16 +50,6 @@ const router = new Router({
       component: TransactionDetail
     },
     {
-      path: '/templates',
-      name: 'TemplateList',
-      component: TemplateList
-    },
-    {
-      path: '/templates/new',
-      name: 'TemplateNew',
-      component: TemplateNew
-    },
-    {
       path: '/users/:id',
       name: 'UserDetail',
       component: UserDetail
@@ -64,7 +57,34 @@ const router = new Router({
     {
       path: '/settings',
       name: 'Settings',
-      component: Settings
+      component: Settings,
+      children: [
+        {
+          path: 'general',
+          name: 'SettingsGeneral',
+          component: SettingsGeneral
+        },
+        {
+          path: 'users/list',
+          name: 'UserList',
+          component: UserList
+        },
+        {
+          path: 'users/new',
+          name: 'UserNew',
+          component: UserNew
+        },
+        {
+          path: 'templates/list',
+          name: 'TemplateList',
+          component: TemplateList
+        },
+        {
+          path: 'templates/new',
+          name: 'TemplateNew',
+          component: TemplateNew
+        }
+      ]
     }
   ]
 })
