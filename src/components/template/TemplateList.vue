@@ -24,7 +24,6 @@
               <th>Type</th>
               <th>Created at</th>
               <th>Upddated at</th>
-              <th>Version</th>
             </tr>
           </thead>
           <tbody>
@@ -33,7 +32,6 @@
               <td>{{ template.type }}</td>
               <td>{{ template.createdAt }}</td>
               <td>{{ template.updatedAt }}</td>
-              <td>{{ template.version }}</td>
             </tr>
           </tbody>
         </table>
@@ -58,7 +56,7 @@ export default {
   },
   created () {
     axios.all([
-      axios.get(url + 'Templates')
+      axios.get(url + 'templates')
     ]).then(([{ data: templateData }]) => {
       this.templates = templateData
     })

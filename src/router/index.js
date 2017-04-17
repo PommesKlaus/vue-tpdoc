@@ -14,6 +14,7 @@ import UserList from 'components/user/UserList'
 import UserNew from 'components/user/UserNew'
 import TemplateList from 'components/template/TemplateList'
 import TemplateNew from 'components/template/TemplateNew'
+import TemplateDetail from 'components/template/TemplateDetail'
 
 Vue.use(Router)
 
@@ -75,14 +76,19 @@ const router = new Router({
           component: UserNew
         },
         {
-          path: 'templates/list',
+          path: 'templates',
           name: 'TemplateList',
           component: TemplateList
         },
         {
-          path: 'templates/new',
+          path: 'template-new',
           name: 'TemplateNew',
           component: TemplateNew
+        },
+        {
+          path: 'templates/:id',
+          name: 'TemplateDetail',
+          component: TemplateDetail
         }
       ]
     }

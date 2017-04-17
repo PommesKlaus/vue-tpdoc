@@ -25,7 +25,7 @@
               <li>
                 <ul class="nav">
                   <li><router-link :to="{ name: 'TemplateNew' }">Create new Template</router-link></li>
-                  <li><router-link :to="{ name: 'TemplateList' }">List Templates</router-link></li>
+                  <li><router-link :to="{ name: 'TemplateList' }">Existing Templates</router-link></li>
                 </ul>
               </li>
             </ul>
